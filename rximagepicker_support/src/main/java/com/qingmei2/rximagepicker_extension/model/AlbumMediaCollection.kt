@@ -28,39 +28,39 @@ import com.qingmei2.rximagepicker_extension.loader.AlbumMediaLoader
 
 import java.lang.ref.WeakReference
 
-class AlbumMediaCollection : androidx.loader.app.LoaderManager.LoaderCallbacks<Cursor> {
+class AlbumMediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
     private var mContext: WeakReference<Context>? = null
-    private var mLoaderManager: androidx.loader.app.LoaderManager? = null
+    private var mLoaderManager: LoaderManager? = null
     private var mCallbacks: AlbumMediaCallbacks? = null
 
-    override fun onCreateLoader(id: Int, args: Bundle?): androidx.loader.content.Loader<Cursor> {
-        val context = mContext!!.get()
-        val album = args!!.getParcelable<Album>(ARGS_ALBUM)
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+        val context = mContext?.get()
+        val album = args?.getParcelable<Album>(ARGS_ALBUM)!!
 
         return AlbumMediaLoader.newInstance(context, album,
                 album.isAll && args.getBoolean(ARGS_ENABLE_CAPTURE, false))
     }
 
-    override fun onLoadFinished(loader: androidx.loader.content.Loader<Cursor>, data: Cursor) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
         mContext?.get() ?: return
 
         mCallbacks!!.onAlbumMediaLoad(data)
     }
 
-    override fun onLoaderReset(loader: androidx.loader.content.Loader<Cursor>) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
         mContext?.get() ?: return
 
         mCallbacks!!.onAlbumMediaReset()
     }
 
-    fun onCreate(context: androidx.fragment.app.FragmentActivity, callbacks: AlbumMediaCallbacks) {
+    fun onCreate(context: FragmentActivity, callbacks: AlbumMediaCallbacks) {
         mContext = WeakReference(context)
-        mLoaderManager = context.supportLoaderManager
+        mLoaderManager = LoaderManager.getInstance(context)
         mCallbacks = callbacks
     }
 
     fun onDestroy() {
-        mLoaderManager!!.destroyLoader(LOADER_ID)
+        mLoaderManager?.destroyLoader(LOADER_ID)
         mCallbacks = null
     }
 

@@ -253,7 +253,7 @@ class WechatImagePickerFragment : Fragment(), IGalleryCustomPickerView,
             return
 
         if (requestCode == WechatImagePickerActivity.REQUEST_CODE_PREVIEW) {
-            val resultBundle = data!!.getBundleExtra(BasePreviewActivity.EXTRA_RESULT_BUNDLE)
+            val resultBundle = data?.getBundleExtra(BasePreviewActivity.EXTRA_RESULT_BUNDLE)!!
             val selected = resultBundle.getParcelableArrayList<Item>(SelectedItemCollection.STATE_SELECTION)
             val collectionType = resultBundle.getInt(SelectedItemCollection.STATE_COLLECTION_TYPE,
                     SelectedItemCollection.COLLECTION_UNDEFINED)

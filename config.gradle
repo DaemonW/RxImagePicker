@@ -5,9 +5,9 @@ def glide_version = '4.8.0'
 project.ext {
 
     android = [
-            compileSdkVersion: 'android-Q',
+            compileSdkVersion: 28,
             minSdkVersion    : 16,
-            targetSdkVersion : 'Q',
+            targetSdkVersion : 28,
             versionCode      : 27,
             versionName      : "2.5.0-alpha01"
     ]
